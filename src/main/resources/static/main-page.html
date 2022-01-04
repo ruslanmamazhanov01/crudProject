@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Main page</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+        body {
+            width: 1200px;
+            margin: 0 auto;
+            background-image: url(https://images.unsplash.com/photo-1635071858385-26289d95e82b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1887&q=80);
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 600px;
+            text-align: center;
+        }
+        .wrapper {
+            border: 4px solid white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 500px;
+            height: 200px;
+            align-items: center;
+        }
+        h1 {
+            color: white;
+            font-size: 3rem;
+        }
+        a {
+            border: 2px solid wheat;
+            color: white;
+            text-decoration: none;
+            width: 200px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+        a:hover {
+            background: rgb(74, 88, 84);
+        }
+        input{
+            width: inherit;
+            height: inherit;
+            background: inherit;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1 class="animate__animated animate__backInDown">Welcome !</h1>
+    <a href="login"><input type="submit" value="login" /></a>
+</div>
+</body>
+</html>

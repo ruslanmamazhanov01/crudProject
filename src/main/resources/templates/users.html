@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Users</title>
+    <style>
+        body {
+            width: 1200px;
+            margin: 0 auto;
+            background-image: url(https://images.unsplash.com/photo-1635071858385-26289d95e82b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1887&q=80);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 600px;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+            height: 500px;
+            color: white;
+        }
+
+        table {
+            list-style: none;
+        }
+
+        a {
+            border: 2px solid wheat;
+            color: white;
+            text-decoration: none;
+            width: 200px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+
+        a:hover {
+            background: rgb(74, 88, 84);
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>User list</h1>
+    <table class="table table-dark">
+
+
+        <tbody id="haha">
+
+
+        </tbody>
+    </table>
+</div>
+<a href="add-user"> add-user</a>
+<a href="login">logout</a>
+
+
+<!--modal-->
+<!-- todo edit modal -->
+<div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- todo first name -->
+                    <div class="mb-3">
+                        <label for="setFirstName" class="col-form-label">First Name:</label>
+                        <textarea class="form-control" id="setFirstName"></textarea>
+                    </div>
+
+                    <!-- todo email -->
+                    <div class="mb-3">
+                        <label for="setEmail" class="col-form-label">Email</label>
+                        <input type="text" class="form-control" id="setEmail"/>
+                    </div>
+                    <div class="mb-3">
+                        <label
+                                for="recipient-name"
+                                class="col-form-label"
+                                style="display: block"
+                        >Role</label
+                        >
+                        <select name="" id="">
+                            <option value="">ADMIN</option>
+                            <option value="">USER</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" id="changeUser">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal end-->
+
+
+<div></div>
+<script type="text/javascript">
+
+    let add = document.getElementById('add')
+
+    let html = " <tr class=\"table-active\">\n" +
+        "<th>Id</th>\n" +
+        "<th>Name</th>\n" +
+        "<th>Email</th>\n" +
+        "        </tr>";
+    fetch('http://localhost:8080/admin/')
+        .then(data => {
+            return data.json()
+            location.reload()
+        })
+        .then(client => {
+            console.log(client)
+            for (let i of client) {
+                html += `        <tr id="add">
+            <td>${i.id}</td>
+            <td>${i.name}</td>
+            <td>${i.email}</td>
+            <td>
+                        <button onclick="remove(${i.id})">delete</button>
+                        <button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo"
+        style="background: rgb(30, 126, 190); border-radius: 5px"
+ onclick="update('${i.id}','${i.name}','${i.email}')">edit</button>
+
+<!--                        // <button onclick="remolete</button>-->
+
+            </td>   </tr>
+`;
+            }
+        })
+
+    setTimeout(function () {
+        document.getElementById("haha").innerHTML = html;
+    }, 300)
+
+    let changeUser = document.getElementById('changeUser')
+
+    //put
+    function update(id, name, email) {
+        let firstName = document.getElementById('setFirstName')
+        firstName.value = name
+        let email1 = document.getElementById('setEmail')
+        email1.value = email
+
+
+        changeUser.addEventListener('click', updateOnClick)
+        changeUser.setAttribute('data-bs-dismiss', "modal")
+        function updateOnClick() {
+            // console.log('hello')
+            let email1 = document.getElementById('setEmail')
+            let firstName = document.getElementById('setFirstName')
+
+            let data = {
+                id: id,
+                name: firstName.value,
+                email: email1.value,
+            }
+            console.log(id)
+            fetch('http://localhost:8080/update' + '/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => {
+
+                        console.log('hello')
+                        location.reload()
+                        changeUser.removeEventListener('click', updateOnClick)
+                })
+        }
+    }
+
+    //delete
+    function remove(id) {
+        fetch('http://localhost:8080/delete' + "/" + id, {
+            method: 'DELETE'
+        }).then(() => {
+            location.reload()
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+
+
+</script>
+</body>
+</html>

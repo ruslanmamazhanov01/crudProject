@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+            crossorigin="anonymous"
+    />
+    <style>
+        body {
+            width: 1200px;
+            margin: 0 auto;
+            background-image: url(https://images.unsplash.com/photo-1635071858385-26289d95e82b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1887&q=80);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 600px;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        label {
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            font-size: 14px;
+            border-radius: 2px;
+            text-align: center;
+            margin: 4px 4px 4px 4px;
+        }
+    </style>
+    <meta charset="UTF-8"/>
+    <title>Update user</title>
+
+</head>
+<body>
+<form>
+    <!--        th:method="post"-->
+    <!--    th:action="@{/user/{id}/edit(id=${user.getId()})}"-->
+    <!--    th:object="${user}"-->
+    <!--    class="wrapper">-->
+    <label for="id">Enter id: </label>
+    <input type="text" id="id" class="form-control form-control-lg"/>
+
+    <label for="name">Enter name: </label>
+    <input type="text" id="name" class="form-control form-control-lg"/>
+
+    <label for="email">Enter email: </label>
+    <input type="text" id="email" class="form-control form-control-lg"/>
+    <br/>
+    </li>
+    <button onclick="location.href='./test'" class="btn btn-secondary btn-sm" type="submit" id="FormSubmit"
+            value="save">update
+    </button>
+
+    <!--    <input class="btn btn-secondary btn-sm" type="submit" th:value="update"/>-->
+</form>
+<script type="text/javascript">
+    <!--Update method-->
+
+    // const url = 'http://localhost:8080';
+
+    let btn = document.getElementById('FormSubmit')
+
+
+    btn.addEventListener('click', (e) => {
+        let id = document.getElementById('id')
+        let name1 = document.getElementById('name')
+        let email1 = document.getElementById('email')
+        e.preventDefault()
+        fetch('http://localhost:8080/update', {
+            method: 'PUT',
+            body: JSON.stringify({id: id.value, name1: name1.value, email1: email1.value}),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+    })
+
+    function update(id,name,email){
+        console.log(id)
+        console.log(name)
+        console.log(email)
+    }
+</script>
+</body>
+</html>
